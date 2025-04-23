@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MealMate - Food Delivery</title>
+    <style>
+        /* Reset & Base Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* Navbar Styling */
+        nav {
+            height: 70px;
+            background-color: lightpink;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Logo Styling */
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: black;
+            display: flex;
+            align-items: center;
+        }
+        .logo span {
+            margin-left: 10px;
+            letter-spacing: 1px;
+        }
+
+        /* Navbar Links Styling */
+        .nav-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-links a {
+            background-color: rgb(255, 182, 193);
+            color: black;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 120px;
+        }
+
+        /* Hover Effect */
+        .nav-links a:hover {
+            background-color: black;
+            color: rgb(255, 182, 193);
+            box-shadow: 2px 6px 6px rgba(0, 0, 0, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            🍽️ <span>MealMate</span>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'delivery:cusdisplay_res' username %}">View Restaurants</a>
+            <a href="{% url 'delivery:sign_in' %}">Sign In</a>
+            <a href="{% url 'delivery:sign_up' %}">Sign Up</a>
+            
+
+        </div>
+    </nav>
+
+    {% block content %} {% endblock %}
+
+    <footer style="background-color:rgb(22, 21, 21); padding: 20px; text-align: center; margin-top: 40px; border-top: 1px solid #ddd;">
+        <p style="font-size: 14px; color: #333;">
+            &copy; <span id="current-year"></span> MealMate. All rights reserved.
+        </p>
+    </footer>
+
+    <script>
+        // JavaScript to update the year automatically
+        document.getElementById("current-year").textContent = new Date().getFullYear();
+    </script>
+
+    {% include 'delivery/chatbot.html' %}
+</body>
+</html>

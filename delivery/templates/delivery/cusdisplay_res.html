@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MealMate - Food Delivery</title>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color:rgb(231, 214, 219);
+        }
+
+        /* Navbar Styling (unchanged) */
+        nav {
+            background-color: lightpink;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            background-color: rgb(255, 182, 193);
+            color: black;
+            font-weight: bold;
+            padding: 10px 18px;
+            border-radius: 20px;
+            transition: 0.3s ease-in-out;
+            box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-links a:hover {
+            background-color: black;
+            color: rgb(255, 182, 193);
+            box-shadow: 2px 6px 6px rgba(0, 0, 0, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* Content Styling */
+        .content {
+            margin: 50px auto;
+            width: 90%;
+            text-align: center;
+        }
+
+        .content h1 {
+            color: #000;
+            font-size: 32px;
+            margin-bottom: 30px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        thead tr {
+            background-color: #ffb6c1;
+        }
+
+        thead th {
+            padding: 15px;
+            font-size: 18px;
+            color: #000;
+            font-weight: bold;
+            border: 1px solid #aaa;
+        }
+
+        tbody td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #aaa;
+            color: #333;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:hover {
+            background-color: #f1e3e6;
+        }
+
+        tbody img {
+            border-radius: 10px;
+        }
+
+        .view-menu-btn {
+            padding: 8px 14px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .view-menu-btn:hover {
+            background-color: #555;
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">
+            <a href="{% url 'delivery:index' %}">
+                <img src="{% static 'delivery/images/logosuper.png' %}" alt="MealMate Logo">
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'delivery:cusdisplay_res' username %}">View Restaurants</a>
+            <a href="{% url 'delivery:sign_in' %}">Sign In</a>
+            <a href="{% url 'delivery:sign_up' %}">Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- Content Section -->
+    <div class="content">
+        <h1>Hi {{username}}, Explore the Menu..!</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Restaurant Name</th>
+                    <th>Category</th>
+                    <th>Rating</th>
+                    <th>Image</th>
+                    <th>Address</th>
+                    <th>View Menu</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in li %}
+                <tr>
+                    <td>{{ item.Res_name }}</td>
+                    <td>{{ item.Food_cat }}</td>
+                    <td>{{ item.rating }}/5</td>
+                    <td>
+                        <img src="{{ item.img }}" alt="Restaurant Image" height="100" width="100">
+                    </td>
+                    <td>{{ item.address }}</td>
+                    <td>
+                        <a href="{% url 'delivery:cusmenu' item.id username %}">
+                            <button class="view-menu-btn">View Menu</button>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% block content %} {% endblock %}
+
+    <footer style="background-color:rgb(15, 13, 13); padding: 20px; text-align: center; margin-top: 40px; border-top: 1px solid #ddd;">
+        <p style="font-size: 14px; color: white;">
+            &copy; <span id="current-year"></span> MealMate. All rights reserved.
+        </p>
+    </footer>
+
+    <script>
+        // JavaScript to update the year automatically
+        document.getElementById("current-year").textContent = new Date().getFullYear();
+    </script>
+
+    {% include 'delivery/chat.html' %}
+</body>
+</html>

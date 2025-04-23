@@ -1,0 +1,35 @@
+{% extends "delivery/base.html" %} {% block content %}
+<div style="margin-top:50px"></div>
+
+<table>
+    <tr>
+        <th>Username:</th>
+        <th>{{username}}</th>
+    </tr>
+
+    <tr>
+        <th>Password:</th>
+        <th>{{password}}</th>
+    </tr>
+
+    <tr>
+        <th>Email:</th>
+        <th>{{email}}</th>
+    </tr>
+
+    <tr>
+        <th>Mobile:</th>
+        <th>{{mobile}}</th>
+    </tr>
+
+    <tr>
+        <th>Address:</th>
+        <th>{{address}}</th>
+    </tr>
+</table>
+
+{% include 'delivery/chat.html' %}
+
+{% endblock %}
+
+

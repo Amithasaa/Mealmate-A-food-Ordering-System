@@ -1,0 +1,164 @@
+{% extends "delivery/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Background Styling */
+    body {
+        background: url('{% static "delivery/images/signup.jpg" %}') ;
+        margin: 0;
+        padding: 0; 
+        background-size: cover;
+
+ 
+    }
+
+    /* Sign-Up Form Styling */
+    .form-container {
+        max-width: 400px;
+        margin: 130px auto;
+        background: rgba(179, 170, 170, 0.94); /* Transparent white */
+        backdrop-filter: blur(30px); /* Blur effect */
+        -webkit-backdrop-filter: blur(15px);
+        padding: 30px;
+        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 24px rgba(39, 37, 37, 0.2);
+        color: #000;
+    }
+
+    /* Heading Styling */
+    h1 {
+        text-align: center;
+        color: #333;
+        font-size: 26px;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+    }
+
+    /* Underline effect for heading */
+    h1::after {
+        content: "";
+        width: 100px;
+        height: 3px;
+        background-color: #ff4d6d;
+        display: block;
+        margin: 5px auto;
+        border-radius: 2px;
+    }
+
+    /* Label Styling */
+    label {
+        font-size: 16px;
+        font-weight: bold;
+        color: #444;
+        display: block;
+        margin-top: 10px;
+    }
+
+    /* Input & Select Fields */
+    input {
+        width: calc(100% - 10px);
+        padding: 10px;
+        margin-top: 5px;
+        border: 1.5px solid #ffccd5;
+        border-radius: 6px;
+        font-size: 14px;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    /* Input Focus Effect */
+    input:focus {
+        border-color: #ff4d6d;
+        box-shadow: 0px 0px 6px rgba(255, 77, 109, 0.3);
+    }
+
+    /* Form Group Styling */
+    .form-group {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .form-group input {
+        width: 48%;
+    }
+
+    /* Address Field Fix */
+    input[name="address"] {
+        padding: 12px;
+    }
+
+    /* Submit Button Styling */
+    .submit-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin-top: 15px;
+        border: none;
+        border-radius: 20px;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: #ff4d6d;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Button Hover Effect */
+    .submit-btn:hover {
+        background-color: black;
+        color: white;
+        transform: scale(1.03);
+        box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Login Link */
+    .login-link {
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .login-link a {
+        color: #ff4d6d;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .login-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="form-container">
+    <h1>Sign Up</h1>
+    <form method="POST" action="{% url 'delivery:handle_signup' %}">
+        {% csrf_token %}
+
+        <label>Username:</label>
+        <input type="text" name="username" placeholder="Username" required />
+
+        <label>Password:</label>
+        <input type="password" name="password" placeholder="Password" required />
+
+        <label>Email:</label>
+        <input type="email" name="email" placeholder="Email" required />
+
+        <label>Mobile:</label>
+        <input type="text" name="mobile" placeholder="Mobile" required />
+
+        <label>Address:</label>
+        <input type="text" name="address" placeholder="Address" required />
+
+        <button class="submit-btn" type="submit">Sign Up</button>
+
+        <div class="login-link">
+            Already Registered? <a href="{% url 'delivery:sign_in' %}">Login here</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,175 @@
+{% extends "delivery/base.html" %} 
+{% block content %}
+
+<style>
+    body {
+        background: linear-gradient(to bottom right, #fff0f5, #ffe6f0);
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+        font-weight: 800;
+        margin-bottom: 10px;
+        margin-top: 30px;
+        font-size: 26px;
+    }
+
+    .res-details {
+        width: 90%;
+        margin: auto;
+        margin-bottom: 20px;
+        text-align: left;
+        padding-left: 20px;
+        color: #555;
+        font-size: 16px;
+    }
+
+    .res-details p {
+        margin: 6px 0;
+        font-weight: 600;
+    }
+
+    .table-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    table {
+        width: 90%;
+        border-collapse: collapse;
+        background-color: #ffe4eb; /* pink background same as hover */
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.12);
+        border-radius: 14px;
+        overflow: hidden;
+        border: 2px solid #ffb6c1;
+    }
+
+    th, td {
+        border: 1px solid #ffb6c1; /* clear border between rows and columns */
+        padding: 16px;
+        color: #333;
+        font-size: 15px;
+        text-align: center;
+        vertical-align: middle;
+        font-weight: bold;
+        background-color: #ffe4eb; /* consistent color */
+    }
+
+    th {
+        background: #ffb6c1;
+        color: black;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 15px;
+        letter-spacing: 1px;
+    }
+
+    tr:hover td {
+        background-color:rgb(241, 222, 226); /* slightly darker pink when hovered */
+        transition: 0.3s;
+    }
+
+    td img {
+        border-radius: 12px;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    button {
+        padding: 10px 16px;
+        border: none;
+        border-radius: 20px;
+        background-color: #fa607f;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 13px;
+        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    button:hover {
+        background-color: #f14265;
+        transform: scale(1.05);
+    }
+
+    .add-menu {
+        display: flex;
+        justify-content: center;
+        margin-top: 25px;
+        margin-bottom: 30px;
+    }
+
+    .available {
+        color: green;
+        font-weight: bold;
+    }
+
+    .not-available {
+        color: red;
+        font-weight: bold;
+    }
+</style>
+
+<h2>Menu for {{ res.Res_name }}</h2>
+
+<div class="res-details">
+    <p>Address: {{ res.address }}</p>
+    <p>Category: <span style="color:#c2185b;">{{ res.Food_cat }}</span></p>
+    <p>Rating: <span style="color:#c2185b;">{{ res.rating }}</span></p>
+</div>
+
+<div class="table-container">
+    <table>
+        <tr>
+            <th>Item Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Availability</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+
+        {% for item in menu %}
+        <tr>
+            <td>{{ item.item_name }}</td>
+            <td>{{ item.description }}</td>
+            <td>${{ item.price }}</td>
+            <td>
+                <img src="{{ item.img }}" alt="Menu Image" height="90" width="90">
+            </td>
+            <td>
+                {% if item.is_available %}
+                    <span class="available">Available</span>
+                {% else %}
+                    <span class="not-available">Not Available</span>
+                {% endif %}
+            </td>
+            <td style="color:#c2185b;">{{ item.category }}</td>
+            <td>
+                <a href="{% url 'delivery:delete_menu' item.id %}" onclick="return confirm('Are you sure you want to delete this item?');">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">No menu items available.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="add-menu">
+    <a href="{% url 'delivery:add_menu' res.id %}">
+        <button>Add Menu</button>
+    </a>
+</div>
+
+
+{% endblock %}

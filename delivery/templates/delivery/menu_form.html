@@ -1,0 +1,96 @@
+{% extends "delivery/base.html" %}
+{% block content %}
+
+<div style="margin-top:50px;"></div>
+
+<style>
+  body {
+    background-color: #ffe6eb; /* Light Pink Background */
+  }
+
+  .form-container {
+    width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background-color: #fff; /* Form box white */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+    font-weight: 600;
+  }
+
+  .form-container label {
+    display: block;
+    margin: 10px 0 4px;
+    font-weight: 500;
+  }
+
+  .form-container input[type="text"],
+  .form-container input[type="number"],
+  .form-container input[type="email"],
+  .form-container textarea,
+  .form-container select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+
+  /* Align checkbox and label */
+  .form-container .checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .form-container .checkbox input[type="checkbox"] {
+    margin-right: 8px;
+  }
+
+  .form-container button {
+    background-color: #f0708c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto 0;
+  }
+
+  .form-container button:hover {
+    background-color: #d85c79;
+  }
+</style>
+
+<div class="form-container">
+  <h2>Add Menu Item</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    {% for field in form %}
+      {% if field.field.widget.input_type == "checkbox" %}
+        <div class="checkbox">
+          {{ field }} {{ field.label_tag }}
+        </div>
+      {% else %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+      {% endif %}
+      {{ field.errors }}
+    {% endfor %}
+
+    <button type="submit">Submit</button>
+  </form>
+</div>
+{% include 'delivery/chat.html' %}
+{% endblock %}

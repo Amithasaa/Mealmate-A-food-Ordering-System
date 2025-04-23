@@ -1,0 +1,9 @@
+{% extends "delivery/base.html" %} {% block content %}
+<div style="margin-top:50px"></div>
+<h3>Login Successful</h3>
+
+<a href="{% url 'delivery:add_res' %}">Add Restaurants</a>
+<a href="{% url 'delivery:display_res' %}">Show All Restaurants</a>
+
+{% include 'delivery/chat.html' %}
+{% endblock %}

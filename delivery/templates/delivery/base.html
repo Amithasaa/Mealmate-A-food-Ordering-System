@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Delivery</title>
+    <style>
+        /* Navbar Styling */
+        nav {
+            height: 70px;
+            background-color: lightpink;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Logo Styling */
+        .logo img {
+            height: 50px;
+            max-height: 60px;
+        }
+
+        /* Navbar Links Styling */
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .nav-links a {
+            background-color: rgb(255, 182, 193);
+            color: rgb(5, 0, 1);
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-links a:hover {
+            background-color: black;
+            color: rgb(255, 182, 193);
+            box-shadow: 2px 6px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+          <a href="{% url 'delivery:index' %}">
+            <img src="{% static 'delivery/images/logosuper.png' %}" alt="MealMate Logo">
+          </a>
+        </div>
+      
+        <div class="nav-links">
+          {% if request.session.role == 'admin' %}
+            <a href="{% url 'delivery:add_res' %}">Add Restaurant</a>
+            <a href="{% url 'delivery:display_res' %}">View Restaurants</a>
+            <a href="{% url 'delivery:sign_out' %}">Logout</a>
+      
+          {% elif request.session.role == 'customer' %}
+            <a href="{% url 'delivery:cusdisplay_res' request.session.username %}">Restaurants</a>
+            <a href="{% url 'delivery:show_cart' request.session.username %}">Show Cart</a>
+            <a href="{% url 'delivery:sign_out' %}">Logout</a>
+      
+            {% else %}
+            <a href="{% url 'delivery:sign_in' %}">Sign In</a>
+            <a href="{% url 'delivery:sign_up' %}">Sign Up</a>
+           
+        {% endif %}
+        </div>
+      </nav>
+      
+
+    {% block content %} {% endblock %}
+    <footer style="background-color:rgb(12, 12, 12); padding: 20px; text-align: center; margin-top: 40px; border-top: 1px solid #ddd;">
+      <p style="font-size: 14px; color: white;">
+          &copy; <span id="current-year"></span> MealMate. All rights reserved.
+      </p>
+  </footer>
+
+  <script>
+      // JavaScript to update the year automatically
+      document.getElementById("current-year").textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>

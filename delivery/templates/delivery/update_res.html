@@ -1,0 +1,100 @@
+{% extends "delivery/base.html" %}
+{% load static %}
+{% block content %}
+<style>
+   
+        body {
+            background: url('{% static "delivery/images/rest.jpg" %}') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+    
+        h1 {
+            text-align: center;
+            color:rgb(216, 14, 115);
+            margin-top: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+    
+        form {
+            max-width: 500px;
+            margin: 40px auto;
+            background: rgba(241, 235, 235, 0.15); /* Transparent white */
+            backdrop-filter: blur(10px); /* Blur effect */
+            -webkit-backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 24px rgba(39, 37, 37, 0.2);
+            color: #000;
+        }
+    
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color:rgb(245, 243, 244);
+            
+        }
+    
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            background-color: rgba(211, 202, 202, 0.8);
+        }
+    
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            background-color:rgb(223, 19, 121);
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+    
+        button:hover {
+            background-color: #c2185b;
+        }
+   
+    
+</style>
+
+<div style="margin-top: 50px;"></div>
+<h1>Update Restaurant</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <label>Restaurant Name:</label>
+    {{ form.Res_name }}
+
+    <label>Food Category:</label>
+    {{ form.Food_cat }}
+
+    <label>Rating:</label>
+    {{ form.rating }}
+
+    <label>Image:</label>
+    {{ form.img }}
+
+    <label>Address:</label>
+    {{ form.address }}
+
+    <button type="submit">Update</button>
+</form>
+
+{% endblock %}

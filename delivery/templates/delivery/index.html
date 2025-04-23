@@ -1,0 +1,459 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MealMate - Order Food Online</title>
+    <style>
+        /* Reset & Base Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: rgb(240, 231, 229);
+        }
+
+        section {
+            margin-bottom: 40px;
+        }
+        
+        /* Improve spacing around the food section title */
+        .food-section h2 {
+            margin-bottom: 30px;
+            font-size: 26px;
+        }
+        
+        /* Add better padding to food categories */
+        .food-categories {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        
+        /* Add space below each category for balance */
+        .category {
+            margin-bottom: 15px;
+        }
+        
+        /* Restaurant section spacing */
+        .restaurant-section h2 {
+            margin: 40px 0 20px;
+            font-size: 24px;
+        }
+        
+        /* Add some top margin to restaurant cards grid */
+        .restaurants {
+            margin-top: 20px;
+        }
+        
+        /* Cities section spacing */
+        .cities-section {
+            padding: 40px 0;
+        }
+        
+        .title {
+            margin-bottom: 30px;
+        }
+
+        /* ✅ Updated Navbar Styling */
+        nav {
+            height: 70px;
+            background-color: lightpink;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Logo Styling */
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: black;
+            display: flex;
+            align-items: center;
+        }
+        .logo span {
+            margin-left: 10px;
+            letter-spacing: 1px;
+        }
+
+        /* Navbar Links Styling */
+        .nav-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-links a {
+            background-color: rgb(255, 182, 193);
+            color: black;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 120px;
+        }
+
+        .nav-links a:hover {
+            background-color: black;
+            color: rgb(255, 182, 193);
+            box-shadow: 2px 6px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Other sections remain untouched */
+        .food-section {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .food-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            max-width: 80%;
+            margin: auto;
+        }
+
+        .category {
+            text-align: center;
+        }
+
+        .category img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .category:hover img {
+            transform: scale(1.1);
+        }
+
+        .category p {
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .restaurants {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .restaurant {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .restaurant:hover {
+            transform: scale(1.05);
+        }
+
+        .restaurant img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .restaurant h3 {
+            font-size: 18px;
+            margin: 10px;
+        }
+
+        .restaurant p {
+            font-size: 14px;
+            color: #666;
+            margin: 5px 10px;
+        }
+
+        .rating {
+            display: inline-block;
+            background: green;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .cities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            max-width: 900px;
+            margin: auto;
+        }
+        .city-card {
+            display: block;
+            padding: 15px;
+            border: 2px solid rgb(27, 25, 27);
+            border-radius: 10px;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .city-card:hover {
+            background-color:rgb(221, 172, 206);
+            color: black;
+        }
+
+        .logo img {
+            height: 50px;
+            max-height: 60px;
+        }
+
+        /* Popup Modal Styling */
+        #popup-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .popup-content {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0px 6px 20px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .popup-content h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: black;
+        }
+
+        .popup-content p {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #444;
+        }
+
+        .popup-button {
+            background-color: rgb(255, 182, 193);
+            color: black;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup-button:hover {
+            background-color: black;
+            color: rgb(255, 182, 193);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+        
+
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <a href="{% url 'delivery:index' %}">
+                <img src="{% static 'delivery/images/logosuper.png' %}" alt="MealMate Logo">
+            </a>
+        </div>
+        <div class="nav-links">
+           
+            <a href="{% url 'delivery:sign_in' %}">Sign In</a>
+            <a href="{% url 'delivery:sign_up' %}">Sign Up</a>
+        </div>
+    </nav>
+    
+    {% block content %} {% endblock %}
+
+    <!-- Food Categories Section -->
+    <section class="food-section">
+        <h2>What's on your mind?</h2>
+        <div class="food-categories">
+            <div class="category" onclick="showFoodDetails('Paneer Tikka', 'Delicious grilled paneer served with spices.')">
+                <img src="{% static 'delivery/images/panner.jpg' %}" alt="Biryani">
+                <p>Paneer Tikka</p>
+            </div>
+            <div class="category" onclick="showFoodDetails('Vegetable Soup', 'A warm, healthy vegetable soup full of flavors.')">
+                <img src="{% static 'delivery/images/vegetable.jpeg' %}" alt="Vegetable Soup">
+                <p>Vegetable Soup</p>
+            </div>
+            <div class="category" onclick="showFoodDetails('Dal Makhani', 'A rich and creamy lentil curry, served with naan or rice.')">
+                <img src="{% static 'delivery/images/dal.jpeg' %}" alt="Dal Makhani">
+                <p>Dal Makhani</p>
+            </div>
+            <div class="category" onclick="showFoodDetails('Vegetable Biryani', 'Fragrant rice dish with mixed vegetables, spices, and herbs.')">
+                <img src="{% static 'delivery/images/veg.jpg' %}" alt="Vegetable Biryani">
+                <p>Vegetable Biryani</p>
+            </div>
+            <div class="category" onclick="showFoodDetails('Butter Naan', 'Soft and buttery flatbread served with curries.')">
+                <img src="{% static 'delivery/images/butter.jpg' %}" alt="Butter Naan">
+                <p>Butter Naan</p>
+            </div>
+            <div class="category" onclick="showFoodDetails('Fruit Salad', 'A refreshing mix of seasonal fruits, served cold.')">
+                <img src="{% static 'delivery/images/fruit.jpg' %}" alt="Fruit Salad">
+                <p>Fruit Salad</p>
+            </div>
+            <div class="category" onclick="showFoodDetails('Pizza', 'Classic pizza topped with cheese, tomato, and your choice of toppings.')">
+                <img src="{% static 'delivery/images/pizza.jpeg' %}" alt="Pizza">
+                <p>Pizza</p>
+            </div>
+            <div class="category" onclick="showFoodDetails('Samosa', 'A crispy pastry filled with spicy potatoes and peas.')">
+                <img src="{% static 'delivery/images/samosa.jpeg' %}" alt="Samosa">
+                <p>Samosa</p>
+            </div>
+            <div class="category" onclick="showFoodDetails('Vegetable Pakora', 'Deep-fried fritters made from vegetables and chickpea flour.')">
+                <img src="{% static 'delivery/images/pakora.jpg' %}" alt="Vegetable Pakora">
+                <p>Vegetable Pakora</p>
+            </div>
+            <div class="category" onclick="showFoodDetails('Paratha', 'Flaky, buttery flatbread, served with yogurt or curry.')">
+                <img src="{% static 'delivery/images/parota.jpg' %}" alt="Paratha">
+                <p>Paratha</p>
+            </div>
+            <div class="category" onclick="showFoodDetails('Pasta', 'Pasta in a creamy sauce with vegetables or meat.')">
+                <img src="{% static 'delivery/images/pasta.jpeg' %}" alt="Pasta">
+                <p>Pasta</p>
+            </div>
+            <div class="category" onclick="showFoodDetails('Rasmalai', 'Sweet milk-based dessert with saffron and cardamom.')">
+                <img src="{% static 'delivery/images/rasmalai.jpg' %}" alt="Rasmalai">
+                <p>Rasmalai</p>
+            </div>
+            <div class="category" onclick="showFoodDetails('Dessert', 'A variety of sweet treats, perfect to end your meal.')">
+                <img src="{% static 'delivery/images/dessert.jpg' %}" alt="Dessert">
+                <p>Dessert</p>
+            </div>
+            <div class="category" onclick="showFoodDetails('Milkshake', 'A rich and creamy milkshake, blended with your favorite flavors.')">
+                <img src="{% static 'delivery/images/milk.jpg' %}" alt="Milkshake">
+                <p>Milkshake</p>
+            </div>
+        </div>
+    </section>
+    <section class="restaurant-section">
+        <h2 style="text-align:center">Popular Restaurants Near You</h2>
+        <div class="restaurants">
+            <div class="restaurant">
+                <img src="{% static 'delivery/images/burger.jpg' %}" alt="Restaurant 1">
+                <h3>Burger Yard</h3>
+                <p>North Indian, Mughlai</p>
+                <p>⭐ 4.5 • 30 mins</p>
+            </div>
+            <div class="restaurant">
+                <img src="{% static 'delivery/images/lovefood.png' %}" alt="Restaurant 2">
+                <h3>Love Food</h3>
+                <p>Italian, Fast Food</p>
+                <p>⭐ 4.2 • 25 mins</p>
+            </div>
+            <div class="restaurant">
+                <img src="{% static 'delivery/images/hustle.jpg' %}" alt="Restaurant 3">
+                <h3>Hustle</h3>
+                <p>American, Fast Food</p>
+                <p>⭐ 4.0 • 20 mins</p>
+            </div>
+            <div class="restaurant">
+                <img src="{% static 'delivery/images/native.jpeg' %}" alt="Restaurant 4">
+                <h3>Go Native</h3>
+                <p>Japanese, Sushi</p>
+                <p>⭐ 4.8 • 35 mins</p>
+            </div>
+        </div>
+    </section>
+    <section class="cities-section">
+        <h2 class="title" style="text-align:center">Cities with Food Delivery</h2>
+        <div class="cities-grid">
+            <a href="#" class="city-card">Order food online in Bangalore</a>
+            <a href="#" class="city-card">Order food online in Mumbai</a>
+            <a href="#" class="city-card">Order food online in Delhi</a>
+            <a href="#" class="city-card">Order food online in Hyderabad</a>
+            <a href="#" class="city-card">Order food online in Pune</a>
+            <a href="#" class="city-card">Order food online in Chennai</a>
+            <a href="#" class="city-card">Order food online in Kolkata</a>
+            <a href="#" class="city-card">Order food online in Ahmedabad</a>
+            <a href="#" class="city-card">Order food online in Jaipur</a>
+            <a href="#" class="city-card">Order food online in Kochi</a>
+        </div>
+    </section>
+    <!-- Popup Modal -->
+
+{% comment %} newly added {% endcomment %}
+<div id="popup-modal" style="display: none;">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <h2 id="food-name">Food Name</h2>
+        <p id="food-details">Food details go here...</p>
+        <a href="{% url 'delivery:sign_up' %}" class="popup-button">Order Now</a>
+    </div>
+</div>
+
+<script>
+    function closePopup() {
+        document.getElementById("popup-modal").style.display = "none";
+    }
+
+    function showFoodDetails(name, details) {
+        document.getElementById("food-name").innerText = name;
+        document.getElementById("food-details").innerText = details;
+        document.getElementById("popup-modal").style.display = "flex";
+    }
+</script>
+
+<!-- Footer Section -->
+<footer style="background-color:rgb(15, 15, 15); padding: 20px; text-align: center; margin-top: 40px; border-top: 1px solid #ddd;">
+    <p style="font-size: 14px; color: white;">
+        &copy; <span id="current-year"></span> MealMate. All rights reserved.
+    </p>
+</footer>
+
+<script>
+    // JavaScript to update the year automatically
+    document.getElementById("current-year").textContent = new Date().getFullYear();
+</script>
+
+
+
+{% include 'delivery/chat.html' %}
+</body>
+</html>

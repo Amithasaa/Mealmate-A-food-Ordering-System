@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Summary</title>
+
+    <style>
+      body {
+        background: lightpink;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+      }
+
+      .order-box {
+  background: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  width: 400px;
+  backdrop-filter: blur(10px); /* Frosted glass effect */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+
+      .order-box h1 {
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .order-box h2 {
+        color: #555;
+        margin-top: 20px;
+      }
+
+      .order-box p {
+        color: #666;
+        margin: 10px 0;
+      }
+
+      .order-link {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color:rgb(22, 19, 21);
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        transition: background 0.3s;
+      }
+
+      .order-link:hover {
+        background-color:rgb(243, 195, 221);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="order-box">
+      <h1>Thank you for your order, {{ username }}!</h1>
+
+      <h2>Delivery Address</h2>
+      <p>{{ customer.address }}</p>
+
+      <p>Your order will be delivered to this location shortly. Thank you for choosing <strong>Meal Mate!</strong></p>
+
+      {% if cart_items %}
+      <a class="order-link" href="{% url 'customer_menu' cart_items.0.restaurant.id username %}">Back to Restaurants</a>
+      {% else %}
+      <a class="order-link" href="/">Back to Home</a>
+      {% endif %}
+    </div>
+
+    {% include 'delivery/chat.html' %}
+  </body>
+</html>
